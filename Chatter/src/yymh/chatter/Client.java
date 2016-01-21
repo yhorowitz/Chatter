@@ -21,27 +21,26 @@ public class Client {
 	}
 	
 	Client() {
-		Client client = new Client();
 		
-		client.chat = new ChatGUI(client);
+		this.chat = new ChatGUI(this);
 		try {
-			client.data = new ClientData(Server.ip, Server.port);
-			client.data.listenForServer = new ListenForServerInput(client);
-			client.data.listenForServer.start();
-			client.chat.name.setText("Your are user #" + client.data.userId);
+			this.data = new ClientData(Server.ip, Server.port);
+			this.data.listenForServer = new ListenForServerInput(this);
+			this.data.listenForServer.start();
+			this.chat.name.setText("Your are user #" + this.data.userId);
 			
 		} catch (IOException e){
-			client.chat.messages.setText("Error connecting to chat");
+			this.chat.messages.setText("Error connecting to chat");
 			e.printStackTrace();
 		}
 		
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				try {
-					client.data.dos.writeUTF("EXIT_CODE_01234");
-					client.data.listenForServer.listen = false;
-					client.data.listenForServer.interrupt();
-					client.data.nullAllValues();
+					Client.this.data.dos.writeUTF("EXIT_CODE_01234");
+					Client.this.data.listenForServer.listen = false;
+					Client.this.data.listenForServer.interrupt();
+					Client.this.data.nullAllValues();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

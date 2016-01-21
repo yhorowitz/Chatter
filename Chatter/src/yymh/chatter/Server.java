@@ -21,38 +21,20 @@ public class Server {
 	Thread newClientListener;
 	
 	Server() {
-		Server server = new Server();
-		server.messages = new ArrayList<>();
-		server.clients = new ArrayList<>();
+		this.messages = new ArrayList<>();
+		this.clients = new ArrayList<>();
 
 		System.out.println("Server running...");
 		
-		server.newClientListener = new Thread(new ListenForNewClient(server));
+		this.newClientListener = new Thread(new ListenForNewClient(this));
 		
 		try {
-			server.serverSocket = new ServerSocket(port, 10);
+			this.serverSocket = new ServerSocket(port, 10);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		server.newClientListener.start();
+		this.newClientListener.start();
 		
-		//remove clients that have left
-		while (true) { 
-			synchronized(lock) {
-				for (ClientData client : server.clients) {
-					if (client== null || client.socket.isClosed()) {
-						client = null;
-						server.clients.remove(client);
-					}
-				}
-			}
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-				
-		}
 	}
 	
 	public synchronized void  newMessage(ChatLine line) {
