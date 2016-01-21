@@ -8,6 +8,9 @@ public class Client {
 	
 	public static final int MAX_NUM_OF_MESSAGES = 200;
 	
+	public static int port = 22222;
+	public static String ip = "localhost";
+	
 	ClientData data;
 	ArrayList<String> messages = new ArrayList<>();
 	ChatGUI chat;
@@ -24,7 +27,7 @@ public class Client {
 		
 		this.chat = new ChatGUI(this);
 		try {
-			this.data = new ClientData(Server.ip, Server.port);
+			this.data = new ClientData(Client.ip, Client.port);
 			this.data.listenForServer = new ListenForServerInput(this);
 			this.data.listenForServer.start();
 			this.chat.name.setText("Your are user #" + this.data.userId);

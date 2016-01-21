@@ -25,8 +25,8 @@ public class ListenForNewClient implements Runnable {
 				}
 				client.listenForClient = new ListenForClientInput(server, client);
 				client.listenForClient.start();	
-				System.out.println("Client #" + client.userId + " has connected to server");
 				server.newMessage(new ChatLine("system", "User " + client.userId + " has joined chat.", new Date()));
+
 				
 			}catch (IOException e) {
 				e.printStackTrace();
